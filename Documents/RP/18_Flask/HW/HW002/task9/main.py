@@ -35,17 +35,5 @@ def index():
         response.set_cookie('email', user_email)
         return response
 
-@app.route('/getcookie')
-def getcookie():
-   name = request.cookies.get('username')
-   return '<h1>welcome ' + f'{name}' + '</h1>'
-
-app.route('/delCookie/')
-def delCookie():
-    # if response != '':
-    #     response.set_cookie('username', 0)
-    #     response.set_cookie('email', 0)
-    return redirect(url_for('index'), 301)
-
 if __name__ == '__main__':
     app.run(debug=True)
