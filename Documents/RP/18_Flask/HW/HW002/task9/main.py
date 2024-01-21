@@ -5,28 +5,47 @@
 На странице приветствия должна быть кнопка "Выйти" 
 При нажатии на кнопку будет удален cookie файл с данными пользователя 
 и произведено перенаправление на страницу ввода имени и электронной почты.
-
 """
 
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, redirect, url_for
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
-        return render_template('index.html')
+        check = request.cookies.get('username')
+        if check != None:
+            response = make_response(render_template('index.html'))
+            response.delete_cookie('username')
+            response.delete_cookie('email')
+            return response
+        else:
+            return render_template('index.html')
+     
     else:
         user_name = request.form.get('name')
         user_email = request.form.get('email')
-        response = make_response(f'Cookie установлен')
-        response.set_cookie('username', user_name)
-        response.set_cookie('email', user_email)
         context = {
             'user_name': user_name,
             'user_email': user_email
         }
-        return render_template('responce.html', **context)
+        response = make_response(render_template('responce.html', **context))
+        response.set_cookie('username', user_name)
+        response.set_cookie('email', user_email)
+        return response
+
+@app.route('/getcookie')
+def getcookie():
+   name = request.cookies.get('username')
+   return '<h1>welcome ' + f'{name}' + '</h1>'
+
+app.route('/delCookie/')
+def delCookie():
+    # if response != '':
+    #     response.set_cookie('username', 0)
+    #     response.set_cookie('email', 0)
+    return redirect(url_for('index'), 301)
 
 if __name__ == '__main__':
     app.run(debug=True)
