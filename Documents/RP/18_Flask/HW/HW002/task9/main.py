@@ -26,8 +26,7 @@ def index():
             'user_name': user_name,
             'user_email': user_email
         }
-    # return 'response'
-    return render_template('responce.html', **context)
+        return render_template('responce.html', **context)
 
 if __name__ == '__main__':
     app.run(debug=True)
