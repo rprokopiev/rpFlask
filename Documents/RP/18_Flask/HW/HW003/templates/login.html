@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST" action="{{ url_for('login')}}">
+        {{ form.csrf_token }}
+        <p>
+            {{ form.first_name.label }} <br>
+            {{ form.first_name(size=80) }}
+        </p>
+        <p>
+            {{ form.last_name.label }} <br>
+            {{ form.last_name(size=80) }}
+        </p>
+        <p>
+            {{ form.user_email.label }} <br>
+            {{ form.user_email(size=80) }}
+        </p>
+        <p>
+            {{ form.user_password.label }} <br>
+            {{ form.user_password(size=80) }}
+        </p>
+        <p>
+            <input type="submit" value="Зарегистрироваться">
+        </p>
+
+
+    </form>
+    
+</body>
+</html>
